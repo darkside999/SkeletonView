@@ -41,17 +41,17 @@ extension SkeletonCollectionDelegate: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-        view.hideSkeleton()
+        hideSkeletonIfContainerSkeletonIsNotActive(container: tableView, view: view)
         originalTableViewDelegate?.tableView?(tableView, didEndDisplayingHeaderView: view, forSection: section)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
-        view.hideSkeleton()
+        hideSkeletonIfContainerSkeletonIsNotActive(container: tableView, view: view)
         originalTableViewDelegate?.tableView?(tableView, didEndDisplayingFooterView: view, forSection: section)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.hideSkeleton()
+        hideSkeletonIfContainerSkeletonIsNotActive(container: tableView, view: cell)
         originalTableViewDelegate?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
     }
 }
@@ -67,5 +67,13 @@ extension SkeletonCollectionDelegate {
         }
 
         view.showSkeleton(skeletonConfig: skeletonConfig)
+    }
+    
+    private func hideSkeletonIfContainerSkeletonIsNotActive(container: UIView, view: UIView) {
+        guard container.isSkeletonActive == false else {
+            return
+        }
+
+        view.hideSkeleton()
     }
 }
