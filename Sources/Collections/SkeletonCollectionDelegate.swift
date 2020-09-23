@@ -51,7 +51,7 @@ extension SkeletonCollectionDelegate: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        hideSkeletonIfContainerSkeletonIsNotActive(container: tableView, view: cell)
+        cell.hideSkeleton()
         originalTableViewDelegate?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
     }
 }
